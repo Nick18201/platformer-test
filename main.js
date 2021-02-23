@@ -23,6 +23,8 @@ const player = {
   frameY: 5,
   speed: 9,
   moving: false,
+  facingLeft: false,
+  facingRight: false,
 };
 
 function drawCuphead(img, sX, sY, sW, sH, dX, dY, dW, dH) {
@@ -71,21 +73,31 @@ function movePlayer() {
   if (keys["ArrowLeft"] && player.x > 0) {
     player.x -= player.speed;
     player.moving = true;
+    player.facingLeft = true;
+    player.facingRight = false;
     player.frameY = 4;
   }
   if (keys["ArrowRight"] && player.x < canvas.width - player.width) {
     player.x += player.speed;
     player.moving = true;
+    player.facingRight = true;
+    player.facingLeft = false;
     player.frameY = 3;
   }
+  // if (!player.moving) player.frameY = 5;
 }
 
 function handlePlayerFrame() {
-  if (player.frameX < 13 && player.moving) player.frameX++;
-  else player.frameX = 4;
+  if (player.facingRight) {
+    if (player.frameX < 13 && player.moving) player.frameX++;
+    else player.frameX = 3;
+  } else if (player.facingLeft) {
+    if (player.frameX > 0 && player.moving) player.frameX--;
+    else player.frameX = 10;
+  } //else if (!player.moving && player.frameX > 13) player.frameX++;
 }
 
-let fps, fpsInterval, startTime, now, then, elapsed;
+let fps, fpsInterval, now, then, elapsed;
 
 function startAnimating(fps) {
   fpsInterval = 1000 / fps;
