@@ -14,6 +14,6 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgb(243, 193, 101);
   position: absolute;
+  border: 1px solid black;
 }
